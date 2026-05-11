@@ -1,7 +1,6 @@
 from pydantic import BaseModel
 
 
-# CREAR COMPRA
 class PurchaseCreate(BaseModel):
 
     user_id: int
@@ -9,7 +8,6 @@ class PurchaseCreate(BaseModel):
     total_productos: int
 
 
-# RESPUESTA COMPRA
 class PurchaseResponse(BaseModel):
 
     id: int
