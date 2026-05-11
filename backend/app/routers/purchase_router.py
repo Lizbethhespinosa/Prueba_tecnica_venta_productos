@@ -6,14 +6,14 @@ from fastapi import (
 
 from sqlalchemy.orm import Session
 
-from app.config.database import get_db
+from backend.app.config.database import get_db
 
-from app.schemas.purchase_schema import (
+from backend.app.schemas.purchase_schema import (
     PurchaseCreate,
     PurchaseResponse
 )
 
-from app.services.purchase_service import (
+from backend.app.services.purchase_service import (
     create_purchase
 )
 
