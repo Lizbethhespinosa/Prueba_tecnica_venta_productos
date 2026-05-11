@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from app.models.user_model import User
 from app.schemas.user_schema import UserCreate, UserUpdate
-
+from app.utils.security import hash_password
 
 # CREAR
 def create_user(db: Session, user: UserCreate):
@@ -20,7 +20,7 @@ def create_user(db: Session, user: UserCreate):
     new_user = User(
         nombre=user.nombre,
         email=user.email,
-        password=user.password
+        password=hash_password(user.password)
     )
 
     db.add(new_user)
