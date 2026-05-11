@@ -88,4 +88,5 @@ def delete_product(
 
     db.commit()
 
+
     return product
