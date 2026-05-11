@@ -4,12 +4,9 @@ from app.models.purchase_model import Purchase
 from app.models.user_model import User
 from app.models.product_model import Product
 
-from app.schemas.purchase_schema import (
-    PurchaseCreate
-)
+from app.schemas.purchase_schema import PurchaseCreate
 
 
-# CREAR COMPRA
 def create_purchase(
     db: Session,
     purchase: PurchaseCreate
@@ -48,40 +45,3 @@ def create_purchase(
     db.refresh(new_purchase)
 
     return new_purchase
-
-
-# OBTENER TODAS
-def get_purchases(db: Session):
-
-    return db.query(Purchase).all()
-
-
-# OBTENER POR ID
-def get_purchase_by_id(
-    db: Session,
-    purchase_id: int
-):
-
-    return db.query(Purchase).filter(
-        Purchase.id == purchase_id
-    ).first()
-
-
-# ELIMINAR
-def delete_purchase(
-    db: Session,
-    purchase_id: int
-):
-
-    purchase = db.query(Purchase).filter(
-        Purchase.id == purchase_id
-    ).first()
-
-    if not purchase:
-        return None
-
-    db.delete(purchase)
-
-    db.commit()
-
-    return purchase
