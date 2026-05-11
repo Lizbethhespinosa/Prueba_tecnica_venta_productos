@@ -6,6 +6,17 @@ from app.schemas.user_schema import UserCreate, UserUpdate
 # CREAR
 def create_user(db: Session, user: UserCreate):
 
+    # VALIDAR EMAIL DUPLICADO
+    existing_user = db.query(User).filter(
+        User.email == user.email
+    ).first()
+
+    if existing_user:
+
+        return {
+            "error": "El email ya está registrado"
+        }
+
     new_user = User(
         nombre=user.nombre,
         email=user.email,

@@ -31,7 +31,8 @@ router = APIRouter(
 # CREAR PRODUCTO
 @router.post(
     "/",
-    response_model=ProductResponse
+    response_model=ProductResponse,
+    status_code=201
 )
 def create_new_product(
     product: ProductCreate,

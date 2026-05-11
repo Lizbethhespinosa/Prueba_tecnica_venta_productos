@@ -26,7 +26,8 @@ router = APIRouter(
 # CREAR USUARIO
 @router.post(
     "/",
-    response_model=UserResponse
+    response_model=UserResponse,
+    status_code=201
 )
 def create_new_user(
     user: UserCreate,
