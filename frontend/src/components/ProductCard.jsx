@@ -1,5 +1,7 @@
 function ProductCard({ product }) {
-
+    console.log(product);
+    console.log(product.precio);
+    console.log(typeof product.precio);
     return (
 
         <div className="card shadow h-100 rounded-4">
@@ -28,9 +30,7 @@ function ProductCard({ product }) {
                     Precio del producto:
                 </h5>
                 <h4 className="text-success">
-
                     ${product.precio}
-
                 </h4>
                 </div>
 

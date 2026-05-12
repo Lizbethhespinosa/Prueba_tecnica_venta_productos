@@ -1,11 +1,12 @@
 from pydantic import BaseModel
+from decimal import Decimal
 
 
 # CREAR PRODUCTO
 class ProductCreate(BaseModel):
 
     nombre: str
-    precio: float
+    precio: Decimal
     image_url: str
 
 
@@ -14,7 +15,7 @@ class ProductResponse(BaseModel):
 
     id: int
     nombre: str
-    precio: float
+    precio: Decimal
     image_url: str
 
     class Config:
@@ -25,5 +26,5 @@ class ProductResponse(BaseModel):
 class ProductUpdate(BaseModel):
 
     nombre: str
-    precio: float
+    precio: Decimal
     image_url: str
