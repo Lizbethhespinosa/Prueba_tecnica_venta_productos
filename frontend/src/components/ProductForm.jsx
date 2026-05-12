@@ -3,7 +3,7 @@ import { useState } from "react";
 import { createProduct } from "../services/productService";
 
 
-function ProductForm({ onProductCreated }) {
+function ProductForm() {
 
     const [nombre, setNombre] = useState("");
 
@@ -17,10 +17,14 @@ function ProductForm({ onProductCreated }) {
         e.preventDefault();
 
         const productData = {
+
             nombre: nombre,
+
             precio: parseFloat(precio),
+
             image_url: imageUrl
         };
+
 
         try {
 
@@ -28,11 +32,12 @@ function ProductForm({ onProductCreated }) {
 
             alert("Producto creado correctamente");
 
-            setNombre("");
-            setPrecio("");
-            setImageUrl("");
 
-            onProductCreated();
+            setNombre("");
+
+            setPrecio("");
+
+            setImageUrl("");
 
         } catch (error) {
 
@@ -45,67 +50,91 @@ function ProductForm({ onProductCreated }) {
 
     return (
 
-        <div className="card shadow p-4">
+        <div className="glass-card">
 
-            <h3 className="mb-4">
-                Crear Producto
-            </h3>
+            <h1 className="mb-4 text-dark">
+
+                Nuevo Producto
+
+            </h1>
+
 
             <form onSubmit={handleSubmit}>
 
+
                 <div className="mb-3">
 
-                    <label className="form-label">
+                    <label className="form-label text-dark">
+
                         Nombre
+
                     </label>
 
                     <input
                         type="text"
                         className="form-control"
+                        placeholder="Ej. Teclado Mecánico"
                         value={nombre}
-                        onChange={(e) => setNombre(e.target.value)}
+                        onChange={(e) =>
+                            setNombre(e.target.value)
+                        }
                         required
                     />
+
                 </div>
 
 
                 <div className="mb-3">
 
-                    <label className="form-label">
+                    <label className="form-label text-dark">
+
                         Precio
+
                     </label>
 
                     <input
                         type="number"
                         className="form-control"
+                        placeholder="0.00"
                         value={precio}
-                        onChange={(e) => setPrecio(e.target.value)}
+                        onChange={(e) =>
+                            setPrecio(e.target.value)
+                        }
                         required
                     />
+
                 </div>
 
 
                 <div className="mb-3">
 
-                    <label className="form-label">
+                    <label className="form-label text-dark">
+
                         URL Imagen
+
                     </label>
 
                     <input
                         type="text"
                         className="form-control"
+                        placeholder="https://..."
                         value={imageUrl}
-                        onChange={(e) => setImageUrl(e.target.value)}
+                        onChange={(e) =>
+                            setImageUrl(e.target.value)
+                        }
                         required
                     />
+
                 </div>
 
 
                 <button
                     type="submit"
-                    className="btn btn-primary w-100"
+                    className="btn btn-success w-100"
                 >
-                    Guardar Producto
+
+                    Crear Producto
+
                 </button>
 
             </form>

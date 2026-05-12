@@ -2,34 +2,37 @@ function ProductCard({ product }) {
 
     return (
 
-        <div className="card shadow h-100">
+        <div className="card shadow h-100 rounded-4">
 
             <img
                 src={product.image_url}
                 className="card-img-top"
                 alt={product.nombre}
                 style={{
-                    height: "250px",
+                    height: "220px",
                     objectFit: "cover"
                 }}
             />
 
             <div className="card-body">
-
-                <h5 className="card-title">
-                    {product.nombre}
+                <div className="divNombreProducto">
+                <h5>
+                    Nombre del producto:
                 </h5>
+                <h4>
+                    {product.nombre}
+                </h4>
+                </div>
+                <div className="divPrecioProducto">
+                <h5>
+                    Precio del producto:
+                </h5>
+                <h4 className="text-success">
 
-                <p className="card-text">
-
-                    <strong>
-                        Precio:
-                    </strong>
-
-                    {" "}
                     ${product.precio}
 
-                </p>
+                </h4>
+                </div>
 
             </div>
 
