@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Float
+from sqlalchemy import Column, Integer, String, Numeric
 from app.config.database import Base
 
 class Product(Base):
@@ -6,5 +6,5 @@ class Product(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     nombre = Column(String, nullable=False)
-    precio = Column(Float, nullable=False)
+    precio = Column(Numeric, nullable=False)
     image_url = Column(String, nullable=False)

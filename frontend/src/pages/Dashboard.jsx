@@ -27,7 +27,7 @@ function Dashboard() {
                     <div className="col-md-4">
 
                         <DashboardCard
-                            icon="+"
+                            icon="📥"
                             title ="Nuevo Producto"
                             description="Registrar un nuevo producto"
                             onClick={() => navigate("/create")}
