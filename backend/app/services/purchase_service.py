@@ -5,9 +5,10 @@ from app.models.user_model import User
 from app.models.product_model import Product
 
 from app.schemas.purchase_schema import PurchaseCreate
+from app.config.mongo import purchase_collection
 
 
-def create_purchase(
+async def create_purchase(
     db: Session,
     purchase: PurchaseCreate
 ):
@@ -39,9 +40,16 @@ def create_purchase(
     )
 
     db.add(new_purchase)
-
     db.commit()
-
     db.refresh(new_purchase)
 
+    await purchase_collection.insert_one({
+        "id": new_purchase.id,
+        "user_id": new_purchase.user_id,
+        "product_id": new_purchase.product_id,
+        "total_productos": new_purchase.total_productos,
+        "created_at": new_purchase.created_at
+    })
+
     return new_purchase
+
