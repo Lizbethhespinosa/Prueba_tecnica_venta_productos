@@ -1,6 +1,7 @@
+import os
 from motor.motor_asyncio import AsyncIOMotorClient
 
-MONGO_URL = "mongodb://host.docker.internal:27017"
+MONGO_URL = os.getenv("MONGO_URL")
 
 client = AsyncIOMotorClient(MONGO_URL)
 
