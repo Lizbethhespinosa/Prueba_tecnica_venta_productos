@@ -25,7 +25,13 @@ async def create_user(user: UserCreate):
             "error": "El email ya está registrado"
         }
 
+    next_id = max(
+        [u.id for u in users],
+        default=0
+    ) + 1
+
     new_user = UserEntity(
+        id=next_id,
         nombre=user.nombre,
         email=user.email,
         password=hash_password(user.password)

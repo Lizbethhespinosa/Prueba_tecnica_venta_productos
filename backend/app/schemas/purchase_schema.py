@@ -13,7 +13,6 @@ class PurchaseResponse(BaseModel):
     user_id: int
     product_id: int
     total_productos: int
-    created_at: datetime
 
     class Config:
         from_attributes = True

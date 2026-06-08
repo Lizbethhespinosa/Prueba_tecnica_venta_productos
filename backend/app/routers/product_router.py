@@ -34,12 +34,11 @@ router = APIRouter(
     response_model=ProductResponse,
     status_code=201
 )
-def create_new_product(
-    product: ProductCreate,
-    db: Session = Depends(get_db)
+async def create_new_product(
+    product: ProductCreate
 ):
 
-    return create_product(db, product)
+    return await create_product(product)
 
 
 # OBTENER TODOS

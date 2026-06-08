@@ -29,13 +29,11 @@ router = APIRouter(
     response_model=PurchaseResponse,
     status_code=201
 )
-async def create_new_purchase(   # <-- cambio aquí
-    purchase: PurchaseCreate,
-    db: Session = Depends(get_db)
+async def create_new_purchase(
+    purchase: PurchaseCreate
 ):
 
-    new_purchase = await create_purchase(   # <-- cambio aquí
-        db,
+    new_purchase = await create_purchase(
         purchase
     )
 
@@ -47,4 +45,3 @@ async def create_new_purchase(   # <-- cambio aquí
         )
 
     return new_purchase
-

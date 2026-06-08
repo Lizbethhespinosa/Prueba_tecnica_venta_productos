@@ -1,6 +1,4 @@
 import asyncio
-import inspect
-
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -9,8 +7,6 @@ from persistence_kit.repository_factory.factory.repository_factory import (
     get_repo,
     set_registry_initializer
 )
-
-from persistence_kit.settings.repo_settings import RepoSettings
 
 from app.persistence.entity_registry import register_entities
 from app.entities.product_entity import ProductEntity
@@ -21,6 +17,14 @@ async def main():
 
     repo = get_repo("product")
 
-    print(inspect.signature(repo.delete))
+    entity = ProductEntity(
+        nombre="Prueba",
+        precio=10,
+        image_url="test"
+    )
+
+    print(entity)
+    print(vars(entity))
+
 
 asyncio.run(main())

@@ -10,7 +10,7 @@ from app.schemas.product_schema import (
     ProductCreate,
     ProductUpdate
 )
-
+from app.entities.product_entity import ProductEntity
 
 # CREAR PRODUCTO
 async def create_product(
@@ -19,7 +19,15 @@ async def create_product(
 
     repo = get_repo("product")
 
+    products = await repo.list()
+
+    next_id = max(
+        [p.id for p in products],
+        default=0
+    ) + 1
+
     new_product = ProductEntity(
+        id=next_id,
         nombre=product.nombre,
         precio=float(product.precio),
         image_url=product.image_url
