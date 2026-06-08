@@ -1,5 +1,3 @@
-from sqlalchemy.orm import Session
-from app.models.user_model import User
 from app.schemas.user_schema import UserCreate, UserUpdate
 from app.utils.security import hash_password
 from persistence_kit.repository_factory.factory.repository_factory import (

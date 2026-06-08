@@ -1,7 +1,3 @@
-from sqlalchemy.orm import Session
-from app.entities.product_entity import ProductEntity
-
-from app.models.product_model import Product
 from persistence_kit.repository_factory.factory.repository_factory import (
     get_repo
 )
@@ -10,6 +6,7 @@ from app.schemas.product_schema import (
     ProductCreate,
     ProductUpdate
 )
+
 from app.entities.product_entity import ProductEntity
 
 # CREAR PRODUCTO
