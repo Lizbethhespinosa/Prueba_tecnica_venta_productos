@@ -1,6 +1,10 @@
 from sqlalchemy.orm import Session
+from app.entities.product_entity import ProductEntity
 
 from app.models.product_model import Product
+from persistence_kit.repository_factory.factory.repository_factory import (
+    get_repo
+)
 
 from app.schemas.product_schema import (
     ProductCreate,
@@ -9,84 +13,73 @@ from app.schemas.product_schema import (
 
 
 # CREAR PRODUCTO
-def create_product(
-    db: Session,
+async def create_product(
     product: ProductCreate
 ):
 
-    new_product = Product(
+    repo = get_repo("product")
+
+    new_product = ProductEntity(
         nombre=product.nombre,
-        precio=product.precio,
+        precio=float(product.precio),
         image_url=product.image_url
     )
 
-    db.add(new_product)
-
-    db.commit()
-
-    db.refresh(new_product)
+    await repo.add(new_product)
 
     return new_product
 
-
 # OBTENER TODOS
-def get_products(db: Session):
+async def get_products():
 
-    return db.query(Product).all()
+    repo = get_repo("product")
+
+    return await repo.list()
 
 
 # OBTENER POR ID
-def get_product_by_id(
-    db: Session,
+async def get_product_by_id(
     product_id: int
 ):
 
-    return db.query(Product).filter(
-        Product.id == product_id
-    ).first()
+    repo = get_repo("product")
 
+    return await repo.get(product_id)
 
 # ACTUALIZAR
-def update_product(
-    db: Session,
+async def update_product(
     product_id: int,
     product_data: ProductUpdate
 ):
 
-    product = db.query(Product).filter(
-        Product.id == product_id
-    ).first()
+    repo = get_repo("product")
+
+    product = await repo.get(product_id)
 
     if not product:
         return None
 
     product.nombre = product_data.nombre
-    product.precio = product_data.precio
+    product.precio = float(product_data.precio)
     product.image_url = product_data.image_url
 
-    db.commit()
-
-    db.refresh(product)
+    await repo.update(product)
 
     return product
 
 
 # ELIMINAR
-def delete_product(
-    db: Session,
+async def delete_product(
     product_id: int
 ):
 
-    product = db.query(Product).filter(
-        Product.id == product_id
-    ).first()
+    repo = get_repo("product")
+
+    product = await repo.get(product_id)
 
     if not product:
         return None
 
-    db.delete(product)
-
-    db.commit()
-
+    await repo.delete(product_id)
 
     return product

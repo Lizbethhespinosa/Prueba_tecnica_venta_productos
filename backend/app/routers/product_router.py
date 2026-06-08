@@ -47,11 +47,9 @@ def create_new_product(
     "/",
     response_model=list[ProductResponse]
 )
-def get_all_products(
-    db: Session = Depends(get_db)
-):
+async def get_all_products():
 
-    return get_products(db)
+    return await get_products()
 
 
 # OBTENER POR ID
@@ -59,13 +57,11 @@ def get_all_products(
     "/{product_id}",
     response_model=ProductResponse
 )
-def get_product(
-    product_id: int,
-    db: Session = Depends(get_db)
+async def get_product(
+    product_id: int
 ):
 
-    product = get_product_by_id(
-        db,
+    product = await get_product_by_id(
         product_id
     )
 
@@ -84,14 +80,12 @@ def get_product(
     "/{product_id}",
     response_model=ProductResponse
 )
-def update_existing_product(
+async def update_existing_product(
     product_id: int,
-    product_data: ProductUpdate,
-    db: Session = Depends(get_db)
+    product_data: ProductUpdate
 ):
 
-    updated_product = update_product(
-        db,
+    updated_product = await update_product(
         product_id,
         product_data
     )
@@ -108,13 +102,11 @@ def update_existing_product(
 
 # ELIMINAR
 @router.delete("/{product_id}")
-def delete_existing_product(
-    product_id: int,
-    db: Session = Depends(get_db)
+async def delete_existing_product(
+    product_id: int
 ):
 
-    deleted_product = delete_product(
-        db,
+    deleted_product = await delete_product(
         product_id
     )
 

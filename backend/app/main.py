@@ -1,3 +1,9 @@
+from persistence_kit.repository_factory.factory.repository_factory import (
+    set_registry_initializer
+)
+
+from app.persistence.entity_registry import register_entities
+
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI
 from app.config.database import engine, Base
@@ -11,6 +17,8 @@ from app.routers import product_router
 from app.routers import purchase_router
 
 app = FastAPI()
+
+set_registry_initializer(register_entities)
 
 app.add_middleware(
     CORSMiddleware,
