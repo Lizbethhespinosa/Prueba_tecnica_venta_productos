@@ -29,12 +29,11 @@ router = APIRouter(
     response_model=UserResponse,
     status_code=201
 )
-def create_new_user(
-    user: UserCreate,
-    db: Session = Depends(get_db)
+async def create_new_user(
+    user: UserCreate
 ):
 
-    return create_user(db, user)
+    return await create_user(user)
 
 
 # OBTENER TODOS
@@ -42,24 +41,20 @@ def create_new_user(
     "/",
     response_model=list[UserResponse]
 )
-def get_all_users(
-    db: Session = Depends(get_db)
-):
+async def get_all_users():
 
-    return get_users(db)
-
+    return await get_users()
 
 # OBTENER POR ID
 @router.get(
     "/{user_id}",
     response_model=UserResponse
 )
-def get_user(
-    user_id: int,
-    db: Session = Depends(get_db)
+async def get_user(
+    user_id: int
 ):
 
-    user = get_user_by_id(db, user_id)
+    user = await get_user_by_id(user_id)
 
     if not user:
         raise HTTPException(
@@ -75,14 +70,12 @@ def get_user(
     "/{user_id}",
     response_model=UserResponse
 )
-def update_existing_user(
+async def update_existing_user(
     user_id: int,
-    user_data: UserUpdate,
-    db: Session = Depends(get_db)
+    user_data: UserUpdate
 ):
 
-    updated_user = update_user(
-        db,
+    updated_user = await update_user(
         user_id,
         user_data
     )
@@ -95,16 +88,13 @@ def update_existing_user(
 
     return updated_user
 
-
 # ELIMINAR
 @router.delete("/{user_id}")
-def delete_existing_user(
-    user_id: int,
-    db: Session = Depends(get_db)
+async def delete_existing_user(
+    user_id: int
 ):
 
-    deleted_user = delete_user(
-        db,
+    deleted_user = await delete_user(
         user_id
     )
 

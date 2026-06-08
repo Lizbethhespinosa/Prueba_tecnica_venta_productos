@@ -2,56 +2,64 @@ from sqlalchemy.orm import Session
 from app.models.user_model import User
 from app.schemas.user_schema import UserCreate, UserUpdate
 from app.utils.security import hash_password
+from persistence_kit.repository_factory.factory.repository_factory import (
+    get_repo
+)
+
+from app.entities.user_entity import UserEntity
 
 # CREAR
-def create_user(db: Session, user: UserCreate):
+async def create_user(user: UserCreate):
 
-    # VALIDAR EMAIL DUPLICADO
-    existing_user = db.query(User).filter(
-        User.email == user.email
-    ).first()
+    repo = get_repo("user")
+
+    users = await repo.list()
+
+    existing_user = next(
+        (u for u in users if u.email == user.email),
+        None
+    )
 
     if existing_user:
-
         return {
             "error": "El email ya está registrado"
         }
 
-    new_user = User(
+    new_user = UserEntity(
         nombre=user.nombre,
         email=user.email,
         password=hash_password(user.password)
     )
 
-    db.add(new_user)
-    db.commit()
-    db.refresh(new_user)
+    await repo.add(new_user)
 
     return new_user
 
-
 # OBTENER TODOS
-def get_users(db: Session):
+async def get_users():
 
-    return db.query(User).all()
+    repo = get_repo("user")
+
+    return await repo.list()
 
 
 # OBTENER POR ID
-def get_user_by_id(db: Session, user_id: int):
+async def get_user_by_id(user_id: int):
 
-    return db.query(User).filter(User.id == user_id).first()
+    repo = get_repo("user")
+
+    return await repo.get(user_id)
 
 
 # ACTUALIZAR
-def update_user(
-    db: Session,
+async def update_user(
     user_id: int,
     user_data: UserUpdate
 ):
 
-    user = db.query(User).filter(
-        User.id == user_id
-    ).first()
+    repo = get_repo("user")
+
+    user = await repo.get(user_id)
 
     if not user:
         return None
@@ -60,23 +68,22 @@ def update_user(
     user.email = user_data.email
     user.password = user_data.password
 
-    db.commit()
-    db.refresh(user)
+    await repo.update(user)
 
     return user
 
-
 # ELIMINAR
-def delete_user(db: Session, user_id: int):
+async def delete_user(
+    user_id: int
+):
 
-    user = db.query(User).filter(
-        User.id == user_id
-    ).first()
+    repo = get_repo("user")
+
+    user = await repo.get(user_id)
 
     if not user:
         return None
 
-    db.delete(user)
-    db.commit()
+    await repo.delete(user_id)
 
     return user
